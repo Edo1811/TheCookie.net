@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TheCookie.net</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      font-family: 'Inter', sans-serif;
+      color: #333;
+    }
+
+    .logo {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-weight: bold;
+      font-size: 1.2rem;
+      background-color: #ffe0b2;
+      padding: 8px 14px;
+      border-radius: 12px;
+      border: 2px solid #cc9933;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+      text-decoration: none;
+      color: #000;
+      transition: transform 0.2s ease;
+    }
+
+    .logo:hover {
+      transform: rotate(-2deg);
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      min-height: 100vh;
+      justify-content: flex-start;
+      padding: 120px 20px 60px;
+    }
+
+    .description {
+      font-size: 1.3rem;
+      max-width: 600px;
+      margin-bottom: 3rem;
+      color: #555;
+    }
+
+    .button-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(180px, 1fr));
+      gap: 30px;
+      max-width: 600px;
+      width: 100%;
+      justify-items: center;
+    }
+
+    .button {
+      display: inline-block;
+      width: 100%;
+      padding: 30px 0;
+      font-size: 1.3rem;
+      background-color: #e0e0e0;
+      border: 2px solid #999;
+      border-radius: 12px;
+      text-decoration: none;
+      color: #000;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .button:hover {
+      background-color: #d0d0d0;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #999;
+      padding: 20px;
+    }
+
+    @media (max-width: 600px) {
+      .button-grid {
+        grid-template-columns: 1fr;
+        max-width: 90%;
+      }
+
+      .logo {
+        font-size: 1rem;
+        padding: 6px 10px;
+      }
+
+      .button {
+        font-size: 1.2rem;
+        padding: 25px 0;
+      }
+
+      .description {
+        font-size: 1.1rem;
+        padding: 0 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a class="logo" href="#">TheCookie.net</a>
+
+  <main>
+    <div class="description">Cookies. Chaos. And me doing dumb stuff online.</div>
+
+    <div class="button-grid">
+      <a href="https://edo1811.github.io/SuImT.net/" class="button">ShutUpImTalking.net</a>
+      <a href="#" class="button">Toss Your Phone</a>
+      <a href="#" class="button">Advertising</a>
+      <a href="#" class="button">OIA cat language translator</a>
+    </div>
+  </main>
+
+  <footer>
+    <div style="margin-bottom: 10px;">
+      <a href="about.html" style="margin: 0 10px; color: #999; text-decoration: none;">About Me</a> |
+      <a href="cookie-policy.html" style="margin: 0 10px; color: #999; text-decoration: none;">Cookie Policy</a> |
+      <a href="terms.html" style="margin: 0 10px; color: #999; text-decoration: none;">Terms (lol)</a> |
+      <a href="contact.html" style="margin: 0 10px; color: #999; text-decoration: none;">Contact (maybe)</a>
+    </div>
+    <div>Made by GEA innovation studios</div>
+  </footer>
+
+
+</body>
+</html>
