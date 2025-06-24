@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>OIA Cat Translator • TheCookie.net</title>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #fefefe;
+      color: #333;
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .logo {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-weight: bold;
+      font-size: 1.2rem;
+      background-color: #ffe0b2;
+      padding: 8px 14px;
+      border-radius: 12px;
+      border: 2px solid #cc9933;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+      text-decoration: none;
+      color: #000;
+      transition: transform 0.2s ease;
+    }
+
+    .logo:hover {
+      transform: rotate(-2deg);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      margin-top: 80px;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      color: #666;
+    }
+
+    input {
+      padding: 12px;
+      font-size: 1.2rem;
+      width: 80%;
+      max-width: 400px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 20px;
+      font-size: 1.1rem;
+      background-color: #ddd;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #ccc;
+    }
+
+    .result {
+      margin-top: 30px;
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: #222;
+    }
+
+    @media (max-width: 600px) {
+      .logo {
+        font-size: 1rem;
+        padding: 6px 10px;
+      }
+
+      h1 {
+        font-size: 2rem;
+        margin-top: 100px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a class="logo" href="index.html">🍪 TheCookie.net</a>
+
+  <h1>OIA Cat Translator</h1>
+  <p>Type any word or sentence and get the Official Internationally Approved 🐱 cat version. Meow?</p>
+
+  <input type="text" id="userInput" placeholder="Type here...">
+  <br>
+  <button onclick="translateToCat()">Translate to OIA</button>
+
+  <div class="result" id="result"></div>
+
+  <script>
+    function translateToCat() {
+      let input = document.getElementById("userInput").value;
+      let onlyVowels = input
+        .toUpperCase()
+        .replace(/[^AEIOU]/g, '')  // Remove all consonants
+        .replace(/E/g, 'I')
+        .replace(/U/g, 'O');
+
+      document.getElementById("result").textContent = onlyVowels.toLowerCase();
+    }
+  </script>
+
+</body>
+</html>
