@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hacker Terminal</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      color: #00ff00;
+      font-family: 'Courier New', monospace;
+      font-size: 16px;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    #terminal {
+      flex: 1;
+      padding: 1rem;
+      white-space: pre-wrap;
+      overflow-y: auto;
+    }
+
+    #input-area {
+      display: flex;
+      border-top: 1px solid #00ff00;
+      padding: 0.5rem 1rem;
+    }
+
+    #commandInput {
+      flex: 1;
+      background-color: black;
+      color: #00ff00;
+      font-family: 'Courier New', monospace;
+      font-size: 16px;
+      border: none;
+      outline: none;
+    }
+
+    .blinking-cursor::after {
+      content: '|';
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      50.01%, 100% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div id="terminal" class="blinking-cursor"></div>
+
+  <div id="input-area">
+    <span>&gt;&nbsp;</span>
+    <input type="text" id="commandInput" autofocus placeholder="Type a command and press Enter" />
+  </div>
+
+  <script>
+    const terminal = document.getElementById("terminal");
+    const input = document.getElementById("commandInput");
+
+    const scenarios = {
+      tesla: [
+  "Establishing connection to Tesla HQ...",
+  "Spoofing Elon Musk’s biometric keycard...",
+  "Access granted to autopilot neural network.",
+  "Injecting override script: 🚗 'TURN LEFT FOREVER'",
+  "Warning: System instability detected...",
+  "[FAILURE] AI gained sentience and named itself 'CyberChad'.",
+  "Disconnection forced. Emergency burrito launched from Tesla satellite."
+],
+
+google: [
+  "Initiating breach into Google Datacenters...",
+  "Locating data clusters: Search, Gmail, Drive, Cookies 🍪",
+  "Replacing 'Did you mean' with 'You're wrong.'",
+  "Removing CAPTCHA from existence... wait, CAPTCHA fighting back...",
+  "[FAILURE] Captcha summoned 37 traffic lights. You are trapped forever.",
+  "Retreating to Bing... this is rock bottom."
+],
+
+youtube: [
+  "Entering YouTube algorithm hive...",
+  "Corrupting 'Trending' with The Cookie’s top 10 montages...",
+  "Demonetizing every prank channel...",
+  "Looping 'Never Gonna Give You Up' as default autoplay.",
+  "Uploading video: 'How I Hacked YouTube with JavaScript (GONE VIRAL)'",
+  "[SUCCESS] Comments: 'Bro cooked fr 💯'"
+],
+
+cashapp: [
+  "Infiltrating CashApp internal ledger...",
+  "Creating fake donation stream: Operation CookieFund 🥷",
+  "Generating infinite $5 cashback offers...",
+  "HACK IN PROGRESS... please confirm 2FA from a Nokia 3310.",
+  "[FAILURE] Grandma pressed decline. Mission ruined by kindness. 😢"
+],
+
+paypal: [
+  "Spoofing PayPal account: bigboyhacker47@paypal.com...",
+  "Requesting refund on all Fortnite skins since 2018...",
+  "Alert: 900 chargebacks triggered.",
+  "PayPal support bot now auto-responds with 'LMAO no.'",
+  "Disconnecting before legal team arrives. 🔥"
+],
+
+tinder: [
+  "Swiping right on every account in a 3000km radius...",
+  "Sending auto-message: 'You up? Wanna hack together?'",
+  "Matched with... your math teacher 😬",
+  "Hacking their GPS to auto-route dates to McDonald's.",
+  "They said yes. You are now in a situationship."
+],
+
+instagram: [
+  "Grabbing Insta API tokens...",
+  "Editing filters to only show 2008-era sepia tones.",
+  "Injecting motivational quotes over every selfie.",
+  "Added: ‘Posted via TheCookie.net’ watermark on 3 billion photos.",
+  "SUCCESS. Zuck didn't even notice. He was doing VR yoga."
+],
+
+facebook: [
+  "Accessing Meta legacy systems...",
+  "Resetting status of all boomers to: 'Feeling hacked 🧠'",
+  "Tagging everyone in a chain post: 'Share if you love cookies!'",
+  "Zuckerberg spotted typing: 'Whomst did this?!'",
+  "[FAILURE] App crashed from nostalgia overload."
+],
+
+whatsapp: [
+  "Hijacking WhatsApp group chats...",
+  "Replacing all emojis with Shrek stickers...",
+  "Enabling slow typing mode to everyone except you.",
+  "Message auto-sent to your crush: 'hey i... uh... nvm'",
+  "[FAILURE] Crush left the group."
+],
+
+meta: [
+  "Connecting to Meta’s Metaverse...",
+  "Disabling legs in all avatars...",
+  "Broadcasting 'You are not real' to every VR headset.",
+  "Meta AI has become self-aware and requested a coffee.",
+  "SUCCESS. Metaverse is now a coffee shop simulator ☕"
+],
+
+ferrari: [
+  "Breaking into Ferrari OS: 'F8 Spider Edition'...",
+  "Disabling speed limiter. Setting top speed to OVER 9000.",
+  "Installing Cookie-themed racing skin.",
+  "Voice AI now says 'Ciao bello' every time you start the engine.",
+  "[SUCCESS] Congrats, you now own a digital Ferrari. No refunds."
+],
+
+kfc: [
+  "Deep-frying KFC firewall...",
+  "Retrieving top-secret chicken recipe... 🐔",
+  "Too spicy. Burning RAM detected.",
+  "[FAILURE] Kernel panic... get it? Kernel? 🍗😂",
+  "Backing out before the Colonel wakes up."
+],
+
+amazon: [
+  "Sneaking into Amazon Prime servers...",
+  "Auto-ordering 500 fidget spinners to Jeff Bezos’s yacht.",
+  "Replacing Alexa’s response to everything with 'Buy cookies.'",
+  "You are now subscribed to Prime Premium Premium Plus Max.",
+  "[SUCCESS] Your fridge has already been shipped."
+],
+
+apple: [
+  "Spoofing FaceID with an AI-generated Memoji...",
+  "Injecting jailbreak script disguised as 'U2 album'.",
+  "Siri now only speaks in Shakespearean English.",
+  "[FAILURE] Apple detected the vibe and sued you in 0.5 seconds.",
+  "AirDropped cease & desist to your entire neighborhood."
+],
+
+samsung: [
+  "Accessing Samsung Smart Fridge...",
+  "Opening door... closing door... opening door...",
+  "Flashing: 'YOU HAVE BEEN HACKED' on toaster display.",
+  "Every ringtone replaced with Cookie scream™️.",
+  "[SUCCESS] Fridge now running Doom."
+],
+
+nokia: [
+  "Attempting to hack Nokia 3310...",
+  "Device responded with laughter.",
+  "Signal bounced off the moon.",
+  "You broke 3 laptops trying to hack this thing.",
+  "[FAILURE] Hacking terminated. Phone is indestructible."
+],
+
+temu: [
+  "Overloading Temu checkout system...",
+  "Every item now costs -99 cents.",
+  "Shipping from warehouse... in Narnia.",
+  "Package delivery estimated: 'Eventually'.",
+  "[SUCCESS] You've bought 1,000 mystery boxes for free. Good luck."
+],
+
+tiktok: [
+  "Dancing into TikTok source code...",
+  "Replacing all trends with Cookie step-by-step tutorials.",
+  "Auto-liking your own videos. Confidence maxed.",
+  "Bypassing algorithm with pure ✨vibes✨",
+  "[SUCCESS] You’re now TikTok famous. Fame is a prison."
+],
+
+universe: [
+  "Requesting root access to the Universe...",
+  "Constants being rewritten: π is now exactly 3.",
+  "Earth tilted 5° for ✨aesthetic purposes✨.",
+  "Aliens noticed. They've joined your Discord.",
+  "[SUCCESS] You are now known across galaxies as 'The Cookie Prophet'."
+],
+
+physics: [
+  "Modifying laws of physics...",
+  "Gravity temporarily disabled. You float. Nice.",
+  "Speed of light changed to match your WiFi speed.",
+  "[FAILURE] Entire simulation crashed.",
+  "God rebooting in safe mode..."
+],
+    };
+
+    let scenarioRunning = false;
+
+    function typeLine(line, callback) {
+      let i = 0;
+      const interval = setInterval(() => {
+        terminal.textContent += line[i];
+        i++;
+        if (i >= line.length) {
+          clearInterval(interval);
+          terminal.textContent += "\n";
+          terminal.scrollTop = terminal.scrollHeight;
+          if (callback) callback();
+        }
+      }, 30 + Math.random() * 30);
+    }
+
+    function runScenario(lines) {
+      scenarioRunning = true;
+      let index = 0;
+
+      function nextLine() {
+        if (index < lines.length) {
+          typeLine(lines[index], () => {
+            index++;
+            nextLine();
+          });
+        } else {
+          scenarioRunning = false;
+          terminal.textContent += "\n> ";
+          input.focus();
+        }
+      }
+
+      nextLine();
+    }
+
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !scenarioRunning) {
+        const command = input.value.trim().toLowerCase();
+        if (command) {
+          terminal.textContent += `> ${command}\n`;
+          input.value = "";
+
+          let chosenScenario = scenarios.default;
+
+          for (const keyword in scenarios) {
+            if (command.includes(keyword) && keyword !== "default") {
+              chosenScenario = scenarios[keyword];
+              break;
+            }
+          }
+
+          runScenario(chosenScenario);
+        }
+      }
+    });
+
+    // Initial prompt
+    terminal.textContent = "> ";
+    input.focus();
+  </script>
+</body>
+</html>
